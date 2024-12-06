@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>XSS Guide - Understanding and preventing Cross-Site scripting</title>
+    <title>XSS Guide - Understanding and preventing cross-site scripting</title>
   </head>
 </html>
 
@@ -16,6 +16,7 @@
     <nav>
       <ul>
         <li><a href="#what-is-xss">What is XSS?</a></li>
+        <li><a href="#how-is-xss-possible">How is XSS Possible?</a></li>
       </ul>
     </nav>
   
@@ -23,10 +24,26 @@
       <h2>What is XSS?</h2>
       <p>
         Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to inject malicious scripts into web applications. 
-        The scripts run in the user’s browser, potentially stealing sensitive data, manipulating web content, or performing unwanted actions on behalf of the user.
+        The scripts run in the user’s browser, allowing attackers to steal sensitive data, manipulate web content, or perform actions without the user’s knowledge.
         XSS are possible in VBScript, ActiveX, Flash and yes even in CSS - though they are most commonly used and associated with JavaScript.
       </p>
     </section>
+
+    <section id="how-is-xss-possible">
+        <h2>How is XSS Possible?</h2>
+        <p>
+          XSS occurs when user input is not sanitized or escaped before being displayed on a webpage. For example:
+        </p>
+        <ul>
+          <li>A website takes user input (for example a guestbook comment) and displays it directly on the page.</li>
+          <li>If the input contains malicious scripts like <code>&lt;script&gt;alert('XSS');&lt;/script&gt;</code>, the website does not filter or escape it.</li>
+          <li>When another user visits the page, their browser executes the malicious script instead of displaying it as plain text.</li>
+        </ul>
+        <p>
+          This happens when developers use methods like <code>innerHTML</code> to insert content into a webpage without proper filtering or escaping, 
+          making the site vulnerable to XSS attacks.
+        </p>
+      </section>
   
     <footer>
       <p>Created by Tim | <a href="https://github.com/teifler" target="_blank">View on GitHub</a></p>
