@@ -126,6 +126,41 @@
           Every visitor will see the alert.
         </code>
       </div>
+
+      <h3>3. DOM-Based XSS</h3>
+      <p>
+        DOM-Based XSS happens inside your browser (on the client side). The
+        server isn’t involved. Hackers can add dangerous input which gets added
+        to the page without being checked, and the browser runs it as code.
+      </p>
+      <div class="code-box">
+        <code>
+          // Example of DOM XSS: let userInput = location.hash; // e.g., #
+          <script>
+            alert("XSS");
+          </script>
+          document.body.innerHTML = userInput; // Vulnerable
+        </code>
+      </div>
+
+      <h3>4. Other Variations</h3>
+      <p>
+        There are heaps of other forms of XSS, including Mutated XSS, JSON-based
+        XSS, CSP bypasses, and more it is super amazing please do your own
+        research its to much to note all of them here.
+      </p>
+      <p>Some examples:</p>
+      <ul>
+        <li>
+          Mutated XSS: The browser changes the hacker's input a bit, but it
+          still works.
+        </li>
+        <li>JSON-based XSS: The hack happens when working with JSON data.</li>
+        <li>
+          CSP bypasses: CSP (Content Security Policy) is meant to block XSS, but
+          hackers find ways around it.
+        </li>
+      </ul>
     </section>
     <footer>
       <p>
