@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XSS Guide - Understanding and preventing cross-site scripting</title>
+    <link rel="stylesheet" href="css/style.css">
   </head>
 </html>
 
@@ -17,6 +18,7 @@
       <ul>
         <li><a href="#what-is-xss">What is XSS?</a></li>
         <li><a href="#how-is-xss-possible">How is XSS Possible?</a></li>
+        <li><a href="#types-of-xss">Types of XSS</a></li>
       </ul>
     </nav>
   
@@ -44,7 +46,43 @@
           making the site vulnerable to XSS attacks.
         </p>
       </section>
+
+      <section id="types-of-xss">
+        <h2>Types of XSS</h2>
+    
+        <h3>1. Reflected XSS</h3>
+        <p>
+          The malicious payload is injected into a URL or HTTP request and is reflected back by the server in the response. 
+          This often occurs in search results, error messages, or any page that dynamically displays user-provided input.
+        </p>
+        <div class="code-box">
+          <code>
+          http://example.com/search?q=<script>alert('XSS')</script>
+          </code>
+        </div>
+        <p>When the server includes <code>q</code> in the response without sanitization, the script executes in the victim’s browser.</p>
+        <p><strong>Important:</strong> Reflected XSS is not stored in the database - it’s simply reflected back on the current site to the user. It can occur in HTML attributes, directly within the HTML page or in the JavaScript context.</p>
   
+        <ul>
+            <li>Reflected XSS is <strong>temporary</strong> or <strong>non-persistent</strong> as the payload is not stored on the server.</li>
+            <li>It requires a user to click on or interact with a specially created link or input. *See example above</li>
+            <li>It affects only the specific user who interacts with the malicious input or URL.</li>
+            <li>Attack vectors include query parameters, form inputs, or HTTP headers.</li>
+        </ul>
+
+
+    <h3>2. Stored XSS</h3>
+    <p>
+      The attacker’s payload is stored on the server (e.g., database, file system) and served to other users. 
+      This is more dangerous because multiple victims viewing the injected/infected content are affected.
+    </p>
+    <div class="code-box">
+      <code>
+      Attacker posts a comment: <script>alert('XSS')</script><br>
+      Every visitor will see the alert.
+      </code>
+    </div>
+      </section>
     <footer>
       <p>Created by Tim | <a href="https://github.com/teifler" target="_blank">View on GitHub</a></p>
     </footer>
