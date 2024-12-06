@@ -4,16 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XSS Guide - Understanding and preventing cross-site scripting</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-</html>
 
-<body>
+  <body>
     <header>
       <h1>Understanding Cross-Site Scripting (XSS) - Beginners guide</h1>
       <p>A guide to learn how to identify, exploit and prevent XSS attacks.</p>
     </header>
-  
+
     <nav>
       <ul>
         <li><a href="#what-is-xss">What is XSS?</a></li>
@@ -21,70 +20,118 @@
         <li><a href="#types-of-xss">Types of XSS</a></li>
       </ul>
     </nav>
-  
+
     <section id="what-is-xss">
       <h2>What is XSS?</h2>
       <p>
-        Cross-Site Scripting (XSS) is a security vulnerability that allows attackers to inject malicious scripts into web applications. 
-        The scripts run in the user’s browser, allowing attackers to steal sensitive data, manipulate web content, or perform actions without the user’s knowledge.
-        XSS are possible in VBScript, ActiveX, Flash and yes even in CSS - though they are most commonly used and associated with JavaScript.
+        Cross-Site Scripting (XSS) is a security vulnerability that allows
+        attackers to inject malicious scripts into web applications. The scripts
+        run in the user’s browser, allowing attackers to steal sensitive data,
+        manipulate web content, or perform actions without the user’s knowledge.
+        XSS are possible in VBScript, ActiveX, Flash and yes even in CSS -
+        though they are most commonly used and associated with JavaScript.
       </p>
     </section>
 
     <section id="how-is-xss-possible">
-        <h2>How is XSS Possible?</h2>
-        <p>
-          XSS occurs when user input is not sanitized or escaped before being displayed on a webpage. For example:
-        </p>
-        <ul>
-          <li>A website takes user input (for example a guestbook comment) and displays it directly on the page.</li>
-          <li>If the input contains malicious scripts like <code>&lt;script&gt;alert('XSS');&lt;/script&gt;</code>, the website does not filter or escape it.</li>
-          <li>When another user visits the page, their browser executes the malicious script instead of displaying it as plain text.</li>
-        </ul>
-        <p>
-          This happens when developers use methods like <code>innerHTML</code> to insert content into a webpage without proper filtering or escaping, 
-          making the site vulnerable to XSS attacks.
-        </p>
-      </section>
+      <h2>How is XSS Possible?</h2>
+      <p>
+        XSS occurs when user input is not sanitized or escaped before being
+        displayed on a webpage. For example:
+      </p>
+      <ul>
+        <li>
+          A website takes user input (for example a guestbook comment) and
+          displays it directly on the page.
+        </li>
+        <li>
+          If the input contains malicious scripts like
+          <code>&lt;script&gt;alert('XSS');&lt;/script&gt;</code>, the website
+          does not filter or escape it.
+        </li>
+        <li>
+          When another user visits the page, their browser executes the
+          malicious script instead of displaying it as plain text.
+        </li>
+      </ul>
+      <p>
+        This happens when developers use methods like <code>innerHTML</code> to
+        insert content into a webpage without proper filtering or escaping,
+        making the site vulnerable to XSS attacks.
+      </p>
+    </section>
 
-      <section id="types-of-xss">
-        <h2>Types of XSS</h2>
-    
-        <h3>1. Reflected XSS</h3>
-        <p>
-          The malicious payload is injected into a URL or HTTP request and is reflected back by the server in the response. 
-          This often occurs in search results, error messages, or any page that dynamically displays user-provided input.
-        </p>
-        <div class="code-box">
-          <code>
-          http://example.com/search?q=<script>alert('XSS')</script>
-          </code>
-        </div>
-        <p>When the server includes <code>q</code> in the response without sanitization, the script executes in the victim’s browser.</p>
-        <p><strong>Important:</strong> Reflected XSS is not stored in the database - it’s simply reflected back on the current site to the user. It can occur in HTML attributes, directly within the HTML page or in the JavaScript context.</p>
-  
-        <ul>
-            <li>Reflected XSS is <strong>temporary</strong> or <strong>non-persistent</strong> as the payload is not stored on the server.</li>
-            <li>It requires a user to click on or interact with a specially created link or input. *See example above</li>
-            <li>It affects only the specific user who interacts with the malicious input or URL.</li>
-            <li>Attack vectors include query parameters, form inputs, or HTTP headers.</li>
-        </ul>
+    <section id="types-of-xss">
+      <h2>Types of XSS</h2>
 
+      <h3>1. Reflected XSS</h3>
+      <p>
+        The malicious payload is injected into a URL or HTTP request and is
+        reflected back by the server in the response. This often occurs in
+        search results, error messages, or any page that dynamically displays
+        user-provided input.
+      </p>
+      <div class="code-box">
+        <code>
+          http://example.com/search?q=
+          <script>
+            alert("XSS");
+          </script>
+        </code>
+      </div>
+      <p>
+        When the server includes <code>q</code> in the response without
+        sanitization, the script executes in the victim’s browser.
+      </p>
+      <p>
+        <strong>Important:</strong> Reflected XSS is not stored in the database
+        - it’s simply reflected back on the current site to the user. It can
+        occur in HTML attributes, directly within the HTML page or in the
+        JavaScript context.
+      </p>
 
-    <h3>2. Stored XSS</h3>
-    <p>
-      The attacker’s payload is stored on the server (e.g., database, file system) and served to other users. 
-      This is more dangerous because multiple victims viewing the injected/infected content are affected.
-    </p>
-    <div class="code-box">
-      <code>
-      Attacker posts a comment: <script>alert('XSS')</script><br>
-      Every visitor will see the alert.
-      </code>
-    </div>
-      </section>
+      <ul>
+        <li>
+          Reflected XSS is <strong>temporary</strong> or
+          <strong>non-persistent</strong> as the payload is not stored on the
+          server.
+        </li>
+        <li>
+          It requires a user to click on or interact with a specially created
+          link or input. *See example above
+        </li>
+        <li>
+          It affects only the specific user who interacts with the malicious
+          input or URL.
+        </li>
+        <li>
+          Attack vectors include URL http parameters (query), form inputs, or
+          HTTP headers.
+        </li>
+      </ul>
+
+      <h3>2. Stored XSS</h3>
+      <p>
+        The attacker’s payload is stored on the server (e.g., database, file
+        system) and served to other users. This is more dangerous because
+        multiple victims viewing the injected/infected content are affected.
+      </p>
+      <div class="code-box">
+        <code>
+          Attacker posts a comment:
+          <script>
+            alert("XSS");
+          </script>
+          <br />
+          Every visitor will see the alert.
+        </code>
+      </div>
+    </section>
     <footer>
-      <p>Created by Tim | <a href="https://github.com/teifler" target="_blank">View on GitHub</a></p>
+      <p>
+        Created by Tim |
+        <a href="https://github.com/teifler" target="_blank">View on GitHub</a>
+      </p>
     </footer>
   </body>
-  </html>
+</html>
